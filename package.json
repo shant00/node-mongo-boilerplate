@@ -1,0 +1,9 @@
+{
+  "name": "book_caralog_backend",
+  "version": "0.0.1",
+  "description": " a Simple Book Catalog Application",
+  "main": "index.js",
+  "repository": "https://github.com/shant00/book_catalog_back-end.git",
+  "author": "Saiful Islam Shanto",
+  "license": "MIT"
+}
