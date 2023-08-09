@@ -1,7 +1,7 @@
 import { Server } from 'http'
 import mongoose from 'mongoose'
 import app from './app'
-import config from './share/config/index'
+import config from './config'
 import { errorLogger, logger } from './share/logger'
 process.on('uncaughtException', error => {
   errorLogger.error(error)
@@ -34,9 +34,9 @@ async function boostrap() {
 
 boostrap()
 
-process.on('SIGTERM', () => {
-  logger.info('SIGTERM is received')
-  if (server) {
-    server.close()
-  }
-})
+// process.on('SIGTERM', () => {
+//   logger.info('SIGTERM is received')
+//   if (server) {
+//     server.close()
+//   }
+// })
