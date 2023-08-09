@@ -1,6 +1,13 @@
 import express from 'express'
+import BookRoutes from '../modules/book/book.router'
 const router = express.Router()
 
+const moduleRoutes = [
+  {
+    path: '/books',
+    route: BookRoutes,
+  },
+]
 // const moduleRoutes = [
 //   {
 //     path: '/users',
@@ -36,5 +43,5 @@ const router = express.Router()
 //   },
 // ]
 
-// moduleRoutes.forEach(route => router.use(route.path, route.route))
+moduleRoutes.forEach(route => router.use(route.path, route.route))
 export default router
