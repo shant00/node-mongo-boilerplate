@@ -5,9 +5,26 @@ const createBookZodSchema = z.object({
     title: z.string(),
     author: z.string(),
     genre: z.string(),
-    publicationDate: z.date(),
-    reviews: z.array(z.string()),
+    publicationDate: z.union([z.date(), z.string()]),
   }),
 })
 
-export default createBookZodSchema
+const updateBookZodSchema = z.object({
+  body: z.object({
+    title: z.string().optional(),
+    author: z.string().optional(),
+    genre: z.string().optional(),
+    publicationDate: z.union([z.date().optional(), z.string().optional()]),
+  }),
+})
+const updateReviewsZodSchema = z.object({
+  body: z.object({
+    reviews: z.array(z.string()).optional(),
+  }),
+})
+
+export const BookValidation = {
+  createBookZodSchema,
+  updateBookZodSchema,
+  updateReviewsZodSchema,
+}

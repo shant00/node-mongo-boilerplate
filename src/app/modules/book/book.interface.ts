@@ -6,6 +6,7 @@ export type IBook = {
   genre: string
   publicationDate: Date
   reviews: string[]
+  createdBy?: string
 }
 
 export type BookModel = Model<IBook, Record<string, unknown>>

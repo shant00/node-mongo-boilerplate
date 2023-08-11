@@ -26,15 +26,15 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   }
 
   //create access token & refresh token
-  const { role, _id } = isUserExist
+  const { role, email: mail } = isUserExist
   const accessToken = jwtHelpers.createToken(
-    { _id, role },
+    { email, role },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string,
   )
 
   const refreshToken = jwtHelpers.createToken(
-    { _id, role },
+    { mail, role },
     config.jwt.refresh_secret as Secret,
     config.jwt.refresh_expires_in as string,
   )
@@ -58,8 +58,8 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
     throw new ApiError(httpStatus.FORBIDDEN, 'Invalid Refresh Token')
   }
 
-  const { _id } = verifiedToken
-  const isUserExist = await User.isUserExist(_id)
+  const { email } = verifiedToken
+  const isUserExist = await User.isUserExist(email)
   if (!isUserExist) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User does not exist')
   }
@@ -67,7 +67,7 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
 
   const newAccessToken = jwtHelpers.createToken(
     {
-      _id: isUserExist._id,
+      mail: isUserExist.email,
       role: isUserExist.role,
     },
     config.jwt.secret as Secret,

@@ -8,7 +8,8 @@ import { bookService } from './book.service'
 const createBook: RequestHandler = catchAsync(
   async (req: Request, res: Response) => {
     const book = req.body
-    const result = await bookService.createBook(book)
+    const email = req.user?.email
+    const result = await bookService.createBook(book, email)
 
     sendResponse<IBook>(res, {
       statusCode: httpStatus.OK,
@@ -44,7 +45,9 @@ const getBook = catchAsync(async (req: Request, res: Response) => {
 const updateBook = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id
   const payload = req.body
-  const result = await bookService.updateBook(id, payload)
+  const email = req.user?.email
+  console.log(req.user)
+  const result = await bookService.updateBook(id, payload, email)
   sendResponse<IBook>(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -52,10 +55,23 @@ const updateBook = catchAsync(async (req: Request, res: Response) => {
     data: result,
   })
 })
+const updateReviews = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id
+  const payload = req.body
+  const email = req.user?.email
+  const result = await bookService.updateBookReviews(id, payload, email)
+  sendResponse<IBook>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book Update successfully !',
+    data: result,
+  })
+})
+
 const deleteBook = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id
-
-  const result = await bookService.deleteBook(id)
+  const email = req.user?.email
+  const result = await bookService.deleteBook(id, email)
 
   sendResponse<IBook>(res, {
     statusCode: httpStatus.OK,
@@ -70,4 +86,5 @@ export const bookController = {
   getBook,
   updateBook,
   deleteBook,
+  updateReviews,
 }
