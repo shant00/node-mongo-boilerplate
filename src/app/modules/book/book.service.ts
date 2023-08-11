@@ -4,7 +4,7 @@ import { IBook } from './book.interface'
 import { Book } from './book.model'
 
 const createBook = async (payload: IBook, email: string): Promise<IBook> => {
-  if (payload.reviews[0]) {
+  if (payload.reviews && payload.reviews[0]) {
     throw new ApiError(
       httpStatus.BAD_REQUEST,
       'You are not able to give the review to your own book!',

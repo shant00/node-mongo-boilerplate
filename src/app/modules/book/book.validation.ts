@@ -19,7 +19,7 @@ const updateBookZodSchema = z.object({
 })
 const updateReviewsZodSchema = z.object({
   body: z.object({
-    reviews: z.array(z.string()).optional(),
+    reviews: z.array(z.string()),
   }),
 })
 
